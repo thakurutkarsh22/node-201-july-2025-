@@ -1,10 +1,12 @@
 function homeResponse(req, res) {
-    // send is only in EXPRESS JS 
-        // behind the scenes send is writing and ending the response ( res.write , res.end)
     res.send("Welcome to the home page express");
 }
 
 
+function contactResponse(req, res) {
+    res.end("contact number: email address : balh @gmail.com");
+}
 
 
-module.exports = {homeResponse}
+
+module.exports = {homeResponse, contactResponse}
