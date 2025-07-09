@@ -2,9 +2,17 @@ const express = require("express");
 const userData = require("./usersData");
 
 const ActivityRoute = require("./Routes/ActivityRoute")
-const HomeRoute = require("./Routes/HomeRoute")
+const BlogRoute = require("./Routes/BlogsRoute");
+const HomeRoute = require("./Routes/HomeRoute");
+const { default: mongoose } = require("mongoose");
 const PORT = 8089;
 const server = express();
+
+
+// COMMON MIDDLWEARE which will work for EVERY request 
+// Returns middleware that only parses json
+server.use(express.json())
+
 
 
 server.use("/", HomeRoute);
@@ -27,6 +35,17 @@ server.get("/fitness", (req, res, next) => {
 
 // use supoort GET, post put delete
 server.use("/api/v1/activity", ActivityRoute)
+
+
+// Support BLogs creation get delete etc.
+server.use("/api/v1/blog", BlogRoute)
+
+
+// DATA BASE CONNECTION 
+
+ mongoose.connect("mongodb://localhost:27017/CrioJuly2025").then(() => {
+     console.log("DB IS UP  ");
+ })
 
 
 
