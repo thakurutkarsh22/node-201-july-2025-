@@ -1,4 +1,4 @@
-const BlogsModel = require("../Models/Blogs.Model");
+const BLogService = require("../Service/BlogService");
 
 function getAllBlogs(req, res) {
 
@@ -10,18 +10,8 @@ async function createBlog(req, res) {
     const content = body.content;
 
 
-
-    // Business Logic 
-    const blogobj = BlogsModel({
-        title,
-        content
-    });
-
-
-    // save it in DB 
-
-    try {
-        const response = await blogobj.save();
+    try{
+        const response = await BLogService.createBlogServiceFunc(title, content);
         res.status(201).json(response);
     } catch(error) {
         res.status(500).json(error);
@@ -39,3 +29,7 @@ function deleteBlogById(req, res) {
 module.exports = {getAllBlogs, createBlog, getBlogById, deleteBlogById}
 
 
+
+
+
+// Bcrypt 
