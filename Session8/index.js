@@ -3,6 +3,7 @@ const userData = require("./usersData");
 
 const ActivityRoute = require("./Routes/ActivityRoute")
 const BlogRoute = require("./Routes/BlogsRoute");
+const AuthRoute = require("./Routes/AuthRoute");
 const HomeRoute = require("./Routes/HomeRoute");
 const { default: mongoose } = require("mongoose");
 const PORT = 8089;
@@ -39,6 +40,8 @@ server.use("/api/v1/activity", ActivityRoute)
 
 // Support BLogs creation get delete etc.
 server.use("/api/v1/blog", BlogRoute)
+
+server.use("/api/v1/auth", AuthRoute);
 
 
 // DATA BASE CONNECTION 
