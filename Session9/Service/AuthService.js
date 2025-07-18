@@ -1,5 +1,10 @@
 const bcrypt = require("bcrypt");
 const UserModel = require("../Models/User.Model");
+const jwt = require("jsonwebtoken");
+const { PRIVATE_JWT_KEY } = require("../Middleware/AuthMiddleware");
+
+
+
 class AuthService {
 
     static async createUser(username, email, password, name) {
@@ -25,28 +30,38 @@ class AuthService {
 
     static async login(userName, password) {
         const loginResponse = {
-            isLogged: false
-            // by default every one is lgged out 
+            isLogged: false,
+            token: ""
         }
 
         try {
             const userArray = await AuthService.findUserByUserName(userName);
-            console.log('userArray', userArray);
+
 
             if(!userArray || userArray.length === 0) {
                 return loginResponse
             } else {
                 const user =  userArray[0];
-                const res = await bcrypt.compare(password, user.password) // plain TExt (asdf1234) || user.password -> $2b$10$.tFAfPR5xo9vAo6hRwHOKutkmmrs01/0M4lBsisELWtsbAe6jyJcu
+                const res = await bcrypt.compare(password, user.password) 
                 // true false
+                let token = "";
+                if(res) {
+                    token = jwt.sign({username: user.username}, PRIVATE_JWT_KEY, {
+                        expiresIn: "10000ms"
+                    });
+                }
+
+
                 return {
-                    isLogged: res
+                    isLogged: res,
+                    token
                 };
             }
 
         } catch(error) {
             return {
-                    isLogged: false
+                    isLogged: false,
+                    token: ""
                 };
         }
 

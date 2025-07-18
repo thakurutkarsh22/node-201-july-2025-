@@ -1,7 +1,9 @@
 const express = require("express");
 const userData = require("../usersData");
 const { getAllUsers, getUserByGender, getUserByUserName } = require("../Controller/ActivityController");
-const AuthMiddleware = require("../Middleware/AuthMiddleware");
+const { AuthMiddleware } = require("../Middleware/AuthMiddleware");
+
+
 const router = express.Router();
 
 
