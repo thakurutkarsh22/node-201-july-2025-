@@ -5,9 +5,16 @@ const ActivityRoute = require("./Routes/ActivityRoute")
 const BlogRoute = require("./Routes/BlogsRoute");
 const AuthRoute = require("./Routes/AuthRoute");
 const HomeRoute = require("./Routes/HomeRoute");
+const passport = require("passport");
+const configPassport = require("./config/passport");
 const { default: mongoose } = require("mongoose");
 const PORT = 8089;
 const server = express();
+
+
+
+// register the config for the passport js 
+configPassport(passport);
 
 
 // COMMON MIDDLWEARE which will work for EVERY request 
